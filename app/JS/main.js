@@ -1,4 +1,5 @@
-import "./style.css";
+import "/css/style.css";
 
-const data = await fetch("https://eldenring.fanapis.com/api/items?limit=100");
-console.log(data);
+const response = await fetch(
+  "https://eldenring.fanapis.com/api/bosses?limit=100"
+);
