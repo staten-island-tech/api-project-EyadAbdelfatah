@@ -15,10 +15,10 @@ async function getData() {
 
 }
 getData();
-async function makeCards(array){
+async function makeCards(){
   await getData();
-  array.forEach(boss => {
-    DOMSelectors.container.insertAdjacentHTML("beforeend",`<h3>${boss.name}</h3>`)
+  result.data.forEach(boss => {
+    DOMSelectors.container.insertAdjacentHTML("beforeend",`<h3>${boss.name}</h3> <img src="${boss.image}" alt="">`)
   });
 }
-makeCards(result);
+makeCards();
