@@ -1,8 +1,8 @@
 import "/css/style.css";
 const DOMSelectors = {
-  container: document.querySelector(".container")
-}
-let result;
+  container: document.querySelector(".container"),
+};
+let result = [];
 async function getData() {
   try {
     const response = await fetch(
@@ -12,13 +12,17 @@ async function getData() {
   } catch (error) {
     console.error("Error fetching data:", error);
   }
-
 }
 getData();
-async function makeCards(array){
+async function makeCards() {
   await getData();
-  array.forEach(boss => {
-    DOMSelectors.container.insertAdjacentHTML("beforeend",`<h3>${boss.name}</h3>`)
+  result.data.forEach((boss) => {
+    console.log(boss.healthPoints);
+    DOMSelectors.container.insertAdjacentHTML(
+      "beforeend",
+      `<h3>${boss.name}</h3>
+      <img src="${boss.image}" alt="" class="card-img">`
+    );
   });
 }
-makeCards(result);
+makeCards();
