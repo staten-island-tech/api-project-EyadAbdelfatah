@@ -1,6 +1,6 @@
 import "/css/style.css";
 const DOMSelectors = {
-  container: document.querySelector(".container"),
+  container: document.querySelector("#container"),
 };
 let result;
 async function getData() {
@@ -16,14 +16,14 @@ async function getData() {
 getData();
 async function makeCards() {
   await getData();
+
   result.data.forEach((boss) => {
     DOMSelectors.container.insertAdjacentHTML(
       "beforeend",
-      `<div class="size-40 ">
-      <h3>${boss.name}</h3> <img src="${boss.image}"
-      </div>
-
-`
+      `<div class="border-solid border-2 border-sky-500>
+         <h3 class="text-xl font-bold text-white mb-2">${boss.name}</h3>
+         <img src="${boss.image}" class="w-full h-40 object-cover rounded-lg" />
+       </div>`
     );
   });
 }
