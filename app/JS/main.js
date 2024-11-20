@@ -1,7 +1,7 @@
 import "/css/style.css";
 const DOMSelectors = {
-  container: document.querySelector(".container")
-}
+  container: document.querySelector(".container"),
+};
 let result;
 async function getData() {
   try {
@@ -12,13 +12,19 @@ async function getData() {
   } catch (error) {
     console.error("Error fetching data:", error);
   }
-
 }
 getData();
-async function makeCards(){
+async function makeCards() {
   await getData();
-  result.data.forEach(boss => {
-    DOMSelectors.container.insertAdjacentHTML("beforeend",`<h3>${boss.name}</h3> <img src="${boss.image}" alt="">`)
+  result.data.forEach((boss) => {
+    DOMSelectors.container.insertAdjacentHTML(
+      "beforeend",
+      `<div class="size-40 ">
+      <h3>${boss.name}</h3> <img src="${boss.image}"
+      </div>
+
+`
+    );
   });
 }
 makeCards();
