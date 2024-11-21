@@ -18,11 +18,13 @@ async function makeCards() {
   await getData();
 
   result.data.forEach((boss) => {
+    if (result.data.name == null) {
+    }
     DOMSelectors.container.insertAdjacentHTML(
       "beforeend",
-      `<div class="border-solid border-2 border-sky-500>
-         <h3 class="text-xl font-bold text-white mb-2">${boss.name}</h3>
-         <img src="${boss.image}" class="w-full h-40 object-cover rounded-lg" />
+      `<div class="border-solid hover:border-dotted">
+         <h3 class="">${boss.name}</h3>
+         <img src="${boss.image}" class="" />
        </div>`
     );
   });
