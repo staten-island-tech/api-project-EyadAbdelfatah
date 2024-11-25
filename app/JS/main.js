@@ -22,9 +22,9 @@ async function makeCards() {
     }
     DOMSelectors.container.insertAdjacentHTML(
       "beforeend",
-      `<div class="border-solid hover:border-dotted">
-         <h3 class="">${boss.name}</h3>
-         <img src="${boss.image}" class="" />
+      `<div class="border-8 border-blue-950 rounded-md size-128 ">
+         <h3 class="text-2xl text-center">${boss.name}</h3>
+         <img src="${boss.image}" class="object-contain h-48 w-96  " />
        </div>`
     );
   });
