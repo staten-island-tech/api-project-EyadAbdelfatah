@@ -16,13 +16,12 @@ async function getData() {
 getData();
 async function makeCards() {
   await getData();
-
   result.data.forEach((boss) => {
     DOMSelectors.container.insertAdjacentHTML(
       "beforeend",
-      `<div class="border-8 border-blue-950 rounded-md w-96 h-96 max-w-full max-h-full">
+      `<div class="border-8 border-blue-950 rounded-md w-full h-96 max-h-full">
       <h3 class="text-2xl text-center">${boss.name}</h3>
-      <img src="${boss.image}" class="object-contain h-96 w-96 max-h-96" alt="${boss.description}"/>
+      <img src="${boss.image}" class="object-contain  w-full max-h-full" alt="${boss.description}"/>
   </div>
   `
     );
