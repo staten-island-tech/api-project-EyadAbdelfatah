@@ -1,4 +1,5 @@
 import "/css/style.css";
+
 const DOMSelectors = {
   container: document.querySelector("#container"),
   buttonContain: document.querySelector("#button-container"),
@@ -39,25 +40,26 @@ async function makeCards() {
 
 makeCards();
 
-function filterHealth(data) {
-  return data.filter(boss => {
-    const healthPoints = convertToInt(boss.healthPoints);
-    return healthPoints !== 0;
+function convertToInt() {
+  result.data.forEach(boss => {
+    if (boss.healthPoints === "???" || !boss.healthPoints) {
+      boss.healthPoints = 0;
+    } else {
+      const NewHealthPoints = String(boss.healthPoints).replace(/\D/g, "");
+      const x = parseInt(NewHealthPoints, 10);
+      boss.healthPoints = x;
+    }
   });
-}
+  const filteredData = result.data.filter(boss => boss.healthPoints !== 0);
 
-function convertToInt(string) {
-  if (string === "???" || !string) {
-    return 0;
-  }
-  return parseInt(string.replace(/[^\d]/g, ""), 10);
+  return filteredData;
 }
 
 function higherOrLowerSetup() {
   DOMSelectors.HOLcontainer.innerHTML = "";
   DOMSelectors.container.innerHTML = "";
-
-  const newResult = filterHealth(result.data);
+  convertToInt();
+  const newResult = convertToInt();
 
   const randomnumber = Math.floor(Math.random() * newResult.length);
   const randomnumber2 = Math.floor(Math.random() * newResult.length);
@@ -73,7 +75,7 @@ function higherOrLowerSetup() {
 
   DOMSelectors.HOLcontainer.insertAdjacentHTML(
     "afterbegin",
-    `<div class="border-8 border-blue-950 rounded-md w-96 mb-12 h-96">
+    `<div class="border-8 border-blue-950 rounded-md w-96 mb-12 h-96" data-health="${firstCard.healthPoints}">
       <h3 class="text-2xl text-center">${firstCard.name}</h3>
       <img src="${firstCard.image}" class="w-full max-h-full" alt="${firstCard.description}"/>
     </div>`
@@ -83,25 +85,31 @@ function higherOrLowerSetup() {
 
   DOMSelectors.HOLcontainer.insertAdjacentHTML(
     "beforeend",
-    `<div class="border-8 border-blue-950 rounded-md w-96 mb-12 h-96">
+    `<div class="border-8 border-blue-950 rounded-md w-96 mb-12 h-96" data-health="${secondCard.healthPoints}">
       <h3 class="text-2xl text-center">${secondCard.name}</h3>
       <img src="${secondCard.image}" class="w-full max-h-full" alt="${secondCard.description}"/>
     </div>`
   );
 
-  higherOrLower();
+  higherOrLower(firstCard, secondCard);
 }
 
-function higherOrLower() {
+function higherOrLower(firstCard, secondCard) {
   DOMSelectors.HOLcontainer.addEventListener("click", function(event) {
-    const newResult = filterHealth(result.data);
+    let gameOver;
+    if (gameOver) return;
+    const newResult = convertToInt();
     DOMSelectors.HOLcontainer.innerHTML = "";
 
     let randomNew = Math.floor(Math.random() * newResult.length);
     let newCard = newResult[randomNew];
 
-    const firstCardHealth = convertToInt(firstCard.healthPoints);
-    const secondCardHealth = convertToInt(secondCard.healthPoints);
+    console.log("First card health:", firstCard.healthPoints, firstCard.name);
+    console.log(
+      "Second card health:",
+      secondCard.healthPoints,
+      secondCard.name
+    );
 
     const secondCardHTML = `<div class="border-8 border-blue-950 rounded-md w-96 mb-12 h-96">
             <h3 class="text-2xl text-center">${secondCard.name}</h3>
@@ -111,24 +119,32 @@ function higherOrLower() {
             <h3 class="text-2xl text-center">${newCard.name}</h3>
             <img src="${newCard.image}" class="w-full max-h-full" alt="${newCard.description}"/>
           </div>`;
-    console.log();
+
     if (event.target.id === "higher") {
-      if (firstCardHealth >= secondCardHealth) {
+      if (firstCard.healthPoints >= secondCard.healthPoints) {
         DOMSelectors.HOLcontainer.insertAdjacentHTML(
           "beforeend",
           secondCardHTML
         );
         DOMSelectors.HOLcontainer.insertAdjacentHTML("beforeend", HOLbuttons);
         DOMSelectors.HOLcontainer.insertAdjacentHTML("beforeend", newCardHTML);
+        firstCard = secondCard;
+        secondCard = newCard;
+      } else {
+        console.log("you lose!");
       }
     } else if (event.target.id === "lower") {
-      if (firstCardHealth <= secondCardHealth) {
+      if (firstCard.healthPoints <= secondCard.healthPoints) {
         DOMSelectors.HOLcontainer.insertAdjacentHTML(
           "beforeend",
           secondCardHTML
         );
         DOMSelectors.HOLcontainer.insertAdjacentHTML("beforeend", HOLbuttons);
         DOMSelectors.HOLcontainer.insertAdjacentHTML("beforeend", newCardHTML);
+        firstCard = secondCard;
+        secondCard = newCard;
+      } else {
+        console.log("you lose!");
       }
     }
   });
