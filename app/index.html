@@ -6,21 +6,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>API Moment</title>
   </head>
-  <body>
+  <body class="bg-black">
     <h1 class="text-center text-4xl">Elden Ring API Project</h1>
     <div id="button-container" class="flex  justify-center gap-4">
       <button class="btn btn-outline">Sort by Runes</button>
        <button class="btn btn-outline" id="HOL">Higher or Lower</button>
-
        <button class="btn btn-outline">Card Gallery</button>
-       <button class="btn btn-outline"></button>
     </div>
     
-    <div id="container" class="p-5 grid grid-cols-4 gap-4 w-full"></div>
-    <div id="HOLcontainer" class="p-5 flex justify-between items-center gap-4 w-full divide-y mt-35">
-      <div class="first"></div>
-      <div class="second"></div>
-    </div>
+    <div id="container" class="p-5 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 w-full"></div>
+
+    <div id="HOLcontainer" class="p-5 flex justify-between  gap-8 w-full h-full mt-35"></div>
+
     <script type="module" src="./JS/main.js"></script>
   </body>
 </html>
