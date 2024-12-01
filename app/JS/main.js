@@ -34,9 +34,10 @@ function makeCards(arr) {
     );
   });
 }
-function getCardHTML(card) {
+function getCardHTML(card, id) {
   return `<div class="border-8 border-blue-950 rounded-md w-96 mb-12 h-96" data-health="${card.healthPoints}">
             <h3 class="text-2xl text-center text-white">${card.name}</h3>
+            <p class="hidden" id="${id}">Health: ${card.healthPoints}</p> 
             <img src="${card.image}" class="object-contain w-96" alt="${card.description}"/>
           </div>`;
 }
@@ -46,8 +47,8 @@ const buttonsHTML = `
     <button id="lower" class="btn btn-secondary text-white">Lower</button>
   </div>`;
 function insertCards(firstCard, secondCard) {
-  const firstCardHTML = getCardHTML(firstCard);
-  const secondCardHTML = getCardHTML(secondCard);
+  const firstCardHTML = getCardHTML(firstCard, "first");
+  const secondCardHTML = getCardHTML(secondCard, "second");
   DOMSelectors.HOLcontainer.insertAdjacentHTML("beforeend", firstCardHTML);
   DOMSelectors.HOLcontainer.insertAdjacentHTML("beforeend", buttonsHTML);
   DOMSelectors.HOLcontainer.insertAdjacentHTML("beforeend", secondCardHTML);
@@ -104,6 +105,12 @@ function higherOrLower(firstCard, secondCard) {
         `<button id="back"class="btn btn-secondary">Back</button>`
       );
       gameOver = true;
+    }
+  });
+  document.querySelector("#first").classList.remove("hidden");
+  DOMSelectors.HOLcontainer.addEventListener("click", function(event) {
+    if (event.target.id === "higher" || event.target.id === "lower") {
+      document.querySelector("#first").classList.remove("hidden");
     }
   });
 }
