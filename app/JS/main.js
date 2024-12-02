@@ -1,4 +1,4 @@
-import "/css/style.css";
+import "../css/style.css";
 
 const DOMSelectors = {
   container: document.querySelector("#container"),
@@ -8,7 +8,7 @@ const DOMSelectors = {
   buttons: document.querySelectorAll("button"),
   health: document.querySelector("#question"),
   input: document.querySelector("#search-input"),
-  input_button: document.querySelector("#submit")
+  input_button: document.querySelector("#submit"),
 };
 let result, firstCard, secondCard;
 async function getData() {
@@ -24,7 +24,7 @@ async function getData() {
 }
 getData();
 function makeCards(arr) {
-  arr.forEach(boss => {
+  arr.forEach((boss) => {
     DOMSelectors.container.insertAdjacentHTML(
       "beforeend",
       `<div class="border-8 border-blue-950 rounded-md w-full h-96 max-h-full">
@@ -54,7 +54,7 @@ function insertCards(firstCard, secondCard) {
   DOMSelectors.HOLcontainer.insertAdjacentHTML("beforeend", secondCardHTML);
 }
 function convertToInt() {
-  result.data.forEach(boss => {
+  result.data.forEach((boss) => {
     if (
       boss.healthPoints === "???" ||
       boss.healthPoints == NaN ||
@@ -67,8 +67,8 @@ function convertToInt() {
       boss.healthPoints = x;
     }
   });
-  const filteredData = result.data.filter(boss => boss.healthPoints !== 0);
-  filteredData.forEach(boss => {
+  const filteredData = result.data.filter((boss) => boss.healthPoints !== 0);
+  filteredData.forEach((boss) => {
     console.log(boss.healthPoints);
   });
   return filteredData;
@@ -89,7 +89,7 @@ function higherOrLowerSetup() {
   higherOrLower(firstCard, secondCard);
 }
 function higherOrLower(firstCard, secondCard) {
-  DOMSelectors.HOLcontainer.addEventListener("click", function(event) {
+  DOMSelectors.HOLcontainer.addEventListener("click", function (event) {
     let gameOver = false;
     if (!event.target.matches("button")) return;
     if (gameOver) return;
@@ -115,7 +115,7 @@ function higherOrLower(firstCard, secondCard) {
     }
   });
   document.querySelector("#first").classList.remove("hidden");
-  DOMSelectors.HOLcontainer.addEventListener("click", function(event) {
+  DOMSelectors.HOLcontainer.addEventListener("click", function (event) {
     if (event.target.id === "higher" || event.target.id === "lower") {
       document.querySelector("#first").classList.remove("hidden");
     }
@@ -130,7 +130,7 @@ async function search() {
     let user_input = DOMSelectors.input.value.toLowerCase();
     DOMSelectors.input.value = "";
     DOMSelectors.container.innerHTML = "";
-    const user__data = search_result.data.filter(boss =>
+    const user__data = search_result.data.filter((boss) =>
       boss.name.toLowerCase().startsWith(user_input)
     );
     makeCards(user__data);
@@ -138,15 +138,15 @@ async function search() {
     alert("Uwhat the bruh");
   }
 }
-DOMSelectors.buttonHOL.addEventListener("click", function() {
+DOMSelectors.buttonHOL.addEventListener("click", function () {
   higherOrLowerSetup();
 });
-DOMSelectors.HOLcontainer.addEventListener("click", function(event) {
+DOMSelectors.HOLcontainer.addEventListener("click", function (event) {
   if (event.target.id === "back") {
     window.location.reload();
   }
 });
-DOMSelectors.input_button.addEventListener("click", function() {
+DOMSelectors.input_button.addEventListener("click", function () {
   event.preventDefault();
   search();
 });
