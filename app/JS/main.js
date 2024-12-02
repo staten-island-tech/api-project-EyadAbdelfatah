@@ -1,4 +1,4 @@
-import "../css/style.css";
+import "../style.css";
 
 const DOMSelectors = {
   container: document.querySelector("#container"),
