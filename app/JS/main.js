@@ -37,7 +37,7 @@ function makeCards(arr) {
 function getCardHTML(card, id) {
   return `<div class="border-8 border-blue-950 rounded-md w-96 mb-12 h-96" data-health="${card.healthPoints}">
             <h3 class="text-2xl text-center text-white">${card.name}</h3>
-            <p class="hidden" id="${id}">Health: ${card.healthPoints}</p> 
+            <p class="hidden text-white" id="${id}">Health: ${card.healthPoints}</p> 
             <img src="${card.image}" class="object-contain w-96" alt="${card.description}"/>
           </div>`;
 }
