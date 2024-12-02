@@ -55,7 +55,11 @@ function insertCards(firstCard, secondCard) {
 }
 function convertToInt() {
   result.data.forEach(boss => {
-    if (boss.healthPoints === "???" || !boss.healthPoints) {
+    if (
+      boss.healthPoints === "???" ||
+      boss.healthPoints == NaN ||
+      boss.healthPoints === undefined
+    ) {
       boss.healthPoints = 0;
     } else {
       const NewHealthPoints = String(boss.healthPoints).replace(/\D/g, "");
@@ -64,6 +68,9 @@ function convertToInt() {
     }
   });
   const filteredData = result.data.filter(boss => boss.healthPoints !== 0);
+  filteredData.forEach(boss => {
+    console.log(boss.healthPoints);
+  });
   return filteredData;
 }
 function higherOrLowerSetup() {
@@ -140,5 +147,6 @@ DOMSelectors.HOLcontainer.addEventListener("click", function(event) {
   }
 });
 DOMSelectors.input_button.addEventListener("click", function() {
+  event.preventDefault();
   search();
 });
