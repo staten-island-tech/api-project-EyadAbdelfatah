@@ -9,7 +9,7 @@ const DOMSelectors = {
   health: document.querySelector("#question"),
   input: document.querySelector("#search-input"),
   input_button: document.querySelector("#submit"),
-  top: document.querySelector("#top")
+  top: document.querySelector(".top")
 };
 let result, firstCard, secondCard;
 async function getData() {
@@ -69,21 +69,20 @@ function convertToInt() {
     }
   });
   const filteredData = result.data.filter(boss => boss.healthPoints !== 0);
-  filteredData.forEach(boss => {
-    console.log(boss.healthPoints);
-  });
+
   return filteredData;
 }
 function higherOrLowerSetup() {
   DOMSelectors.container.innerHTML = "";
   DOMSelectors.buttonContain.innerHTML = "";
+  DOMSelectors.top.innerHTML = "";
   DOMSelectors.health.insertAdjacentHTML(
     "beforeend",
     `<div class="align-center">
       <h2 class="text-white mb-12">Who has more haelth?</h2>
     </div>`
   );
-  DOMSelectors.container.insertAdjacentHTML(
+  DOMSelectors.top.insertAdjacentHTML(
     "beforeend",
     `<button id="back" class="btn btn-secondary w-32 h-10">
       Back
@@ -99,9 +98,6 @@ function higherOrLowerSetup() {
 }
 function higherOrLower(firstCard, secondCard) {
   DOMSelectors.HOLcontainer.addEventListener("click", function(event) {
-    let gameOver = false;
-
-    if (gameOver) return;
     const newResult = convertToInt();
     DOMSelectors.HOLcontainer.innerHTML = "";
     let randomNew = Math.floor(Math.random() * newResult.length);
@@ -122,7 +118,6 @@ function higherOrLower(firstCard, secondCard) {
         "afterbegin",
         `<h3 class="text-white">U lose pal</h3>`
       );
-      gameOver = true;
     }
   });
   document.querySelector("#first").classList.remove("hidden");
@@ -143,6 +138,13 @@ async function search() {
     DOMSelectors.health.innerHTML = "";
     DOMSelectors.container.innerHTML = "";
     DOMSelectors.HOLcontainer.innerHTML = "";
+    DOMSelectors.top.innerHTML = "";
+    DOMSelectors.top.insertAdjacentHTML(
+      "beforeend",
+      `<button id="back" class="btn btn-secondary w-32 h-10">
+        Back
+      </button>`
+    );
     const user__data = search_result.data.filter(boss =>
       boss.name.toLowerCase().startsWith(user_input)
     );
@@ -154,7 +156,7 @@ async function search() {
 DOMSelectors.buttonHOL.addEventListener("click", function() {
   higherOrLowerSetup();
 });
-DOMSelectors.container.addEventListener("click", function(event) {
+DOMSelectors.top.addEventListener("click", function(event) {
   if (event.target.id === "back") {
     window.location.reload();
   }
