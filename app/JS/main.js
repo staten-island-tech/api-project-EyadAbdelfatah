@@ -8,7 +8,8 @@ const DOMSelectors = {
   buttons: document.querySelectorAll("button"),
   health: document.querySelector("#question"),
   input: document.querySelector("#search-input"),
-  input_button: document.querySelector("#submit")
+  input_button: document.querySelector("#submit"),
+  top: document.querySelector("#top")
 };
 let result, firstCard, secondCard;
 async function getData() {
@@ -36,14 +37,13 @@ function makeCards(arr) {
   });
 }
 function getCardHTML(card, id) {
-  return `<div class=" border-8 border-blue-950 rounded-md w-full mb-12 max-h-full" >
+  return `<div class=" border-8 border-blue-950 rounded-md w-full mb-12 h-full" >
             <h3 class="text-2xl text-center text-white">${card.name}</h3>
             <p class="hidden text-white" id="${id}">Health: ${card.healthPoints}</p> 
-            <img src="${card.image}" class="object-contain w-full h-90" alt="${card.description}">
+            <img src="${card.image}" class=" w-full h-80" alt="${card.description}">
           </div>`;
 }
-const buttonsHTML = `  
-  <div class="flex justify-center gap-4 mt-4">
+const buttonsHTML = `<div class="flex justify-center gap-4 mt-4">
     <button id="higher" class="btn btn-primary text-white">Higher</button>
     <button id="lower" class="btn btn-secondary text-white">Lower</button>
   </div>`;
@@ -79,7 +79,15 @@ function higherOrLowerSetup() {
   DOMSelectors.buttonContain.innerHTML = "";
   DOMSelectors.health.insertAdjacentHTML(
     "beforeend",
-    `<div class="align-center"><h2 class="text-white mb-12">Who has more haelth?</h2></div>`
+    `<div class="align-center">
+      <h2 class="text-white mb-12">Who has more haelth?</h2>
+    </div>`
+  );
+  DOMSelectors.container.insertAdjacentHTML(
+    "beforeend",
+    `<button id="back" class="btn btn-secondary w-32 h-10">
+      Back
+    </button>`
   );
   const newResult = convertToInt();
   const randomnumber = Math.floor(Math.random() * newResult.length);
@@ -92,12 +100,13 @@ function higherOrLowerSetup() {
 function higherOrLower(firstCard, secondCard) {
   DOMSelectors.HOLcontainer.addEventListener("click", function(event) {
     let gameOver = false;
-    if (!event.target.matches("button")) return;
+
     if (gameOver) return;
     const newResult = convertToInt();
     DOMSelectors.HOLcontainer.innerHTML = "";
     let randomNew = Math.floor(Math.random() * newResult.length);
     let newCard = newResult[randomNew];
+
     if (
       (event.target.id === "higher" &&
         firstCard.healthPoints >= secondCard.healthPoints) ||
@@ -108,14 +117,10 @@ function higherOrLower(firstCard, secondCard) {
       secondCard = newCard;
       insertCards(firstCard, secondCard);
     } else {
-      DOMSelectors.HOLcontainer.insertAdjacentHTML(
-        "afterbegin",
-        `<button id="back"class="btn btn-secondary">Back</button>`
-      );
       DOMSelectors.health.innerHTML = "";
       DOMSelectors.health.insertAdjacentHTML(
         "afterbegin",
-        `<h3 class = "text-white">U lose pal</h3>`
+        `<h3 class="text-white">U lose pal</h3>`
       );
       gameOver = true;
     }
@@ -149,13 +154,12 @@ async function search() {
 DOMSelectors.buttonHOL.addEventListener("click", function() {
   higherOrLowerSetup();
 });
-DOMSelectors.HOLcontainer.addEventListener("click", function(event) {
+DOMSelectors.container.addEventListener("click", function(event) {
   if (event.target.id === "back") {
     window.location.reload();
   }
 });
 DOMSelectors.input_button.addEventListener("click", function() {
   event.preventDefault();
-
   search();
 });
