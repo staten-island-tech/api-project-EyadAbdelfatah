@@ -9,7 +9,7 @@ const DOMSelectors = {
   health: document.querySelector("#question"),
   input: document.querySelector("#search-input"),
   input_button: document.querySelector("#submit"),
-  top: document.querySelector(".top")
+  top: document.querySelector(".top"),
 };
 let result, firstCard, secondCard;
 async function getData() {
@@ -25,7 +25,7 @@ async function getData() {
 }
 getData();
 function makeCards(arr) {
-  arr.forEach(boss => {
+  arr.forEach((boss) => {
     DOMSelectors.container.insertAdjacentHTML(
       "beforeend",
       `<div class=" border-8 border-blue-950 rounded-md w-full mb-12 h-full" >
@@ -37,7 +37,7 @@ function makeCards(arr) {
   });
 }
 function getCardHTML(card, id) {
-  return `<div class=" border-8 border-blue-950 rounded-md w-full mb-12 h-full" >
+  return `<div class=" border-8 border-blue-950 rounded-md w-85 mb-12 h-70" >
             <h3 class="text-2xl text-center text-white">${card.name}</h3>
             <p class="hidden text-white" id="${id}">Health: ${card.healthPoints}</p> 
             <img src="${card.image}" class=" w-full h-80" alt="${card.description}">
@@ -55,7 +55,7 @@ function insertCards(firstCard, secondCard) {
   DOMSelectors.HOLcontainer.insertAdjacentHTML("beforeend", secondCardHTML);
 }
 function convertToInt() {
-  result.data.forEach(boss => {
+  result.data.forEach((boss) => {
     if (
       boss.healthPoints === "???" ||
       boss.healthPoints == NaN ||
@@ -68,7 +68,7 @@ function convertToInt() {
       boss.healthPoints = x;
     }
   });
-  const filteredData = result.data.filter(boss => boss.healthPoints !== 0);
+  const filteredData = result.data.filter((boss) => boss.healthPoints !== 0);
 
   return filteredData;
 }
@@ -97,7 +97,7 @@ function higherOrLowerSetup() {
   higherOrLower(firstCard, secondCard);
 }
 function higherOrLower(firstCard, secondCard) {
-  DOMSelectors.HOLcontainer.addEventListener("click", function(event) {
+  DOMSelectors.HOLcontainer.addEventListener("click", function (event) {
     const newResult = convertToInt();
     DOMSelectors.HOLcontainer.innerHTML = "";
     let randomNew = Math.floor(Math.random() * newResult.length);
@@ -121,7 +121,7 @@ function higherOrLower(firstCard, secondCard) {
     }
   });
   document.querySelector("#first").classList.remove("hidden");
-  DOMSelectors.HOLcontainer.addEventListener("click", function(event) {
+  DOMSelectors.HOLcontainer.addEventListener("click", function (event) {
     if (event.target.id === "higher" || event.target.id === "lower") {
       document.querySelector("#first").classList.remove("hidden");
     }
@@ -145,7 +145,7 @@ async function search() {
         Back
       </button>`
     );
-    const user__data = search_result.data.filter(boss =>
+    const user__data = search_result.data.filter((boss) =>
       boss.name.toLowerCase().startsWith(user_input)
     );
     makeCards(user__data);
@@ -153,15 +153,15 @@ async function search() {
     alert("Uwhat the bruh");
   }
 }
-DOMSelectors.buttonHOL.addEventListener("click", function() {
+DOMSelectors.buttonHOL.addEventListener("click", function () {
   higherOrLowerSetup();
 });
-DOMSelectors.top.addEventListener("click", function(event) {
+DOMSelectors.top.addEventListener("click", function (event) {
   if (event.target.id === "back") {
     window.location.reload();
   }
 });
-DOMSelectors.input_button.addEventListener("click", function() {
+DOMSelectors.input_button.addEventListener("click", function () {
   event.preventDefault();
   search();
 });
